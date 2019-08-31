@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphQL", "GraphQL\GraphQL.csproj", "{93B857D6-694A-474A-82CF-7E4E80B7664A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQlPlayground", "GraphQL\GraphQlPlayground.csproj", "{93B857D6-694A-474A-82CF-7E4E80B7664A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
