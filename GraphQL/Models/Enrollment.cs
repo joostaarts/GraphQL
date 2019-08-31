@@ -18,7 +18,7 @@ namespace GraphQL.Models
         public Grade? Grade { get; set; }
 
         public Course Course { get; set; }
-        public Person Student { get; set; }
+        public Student Student { get; set; }
     }
 
 }

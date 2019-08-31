@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace GraphQL.Models
 {
-    public class Person
+    public class Student
     {
         public int ID { get; set; }
         public string LastName { get; set; }
-        public string FirstMidName { get; set; }
+        public string FirstName { get; set; }
         public DateTime DateOfBirth { get; set; }
 
         public ICollection<Enrollment> Enrollments { get; set; }
