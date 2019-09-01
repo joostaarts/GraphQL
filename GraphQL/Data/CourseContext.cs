@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GraphQL.Models;
+using GraphQlPlayground.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace GraphQL.Data
+namespace GraphQlPlayground.Data
 {
     public class CourseContext : DbContext
     {

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQL.Models
+namespace GraphQlPlayground.Models
 {
     public class Course
     {

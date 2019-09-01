@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQL.Models
+namespace GraphQlPlayground.Models
 {
     public class Student
     {

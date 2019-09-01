@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GraphQL.Data;
-using Microsoft.AspNetCore.Builder;
+using GraphQL;
+
 using Microsoft.AspNetCore.Hosting;
+using GraphQlPlayground.Data;
+using GraphQlPlayground.Data.Repositories;
+using GraphQlPlayground.GraphQL;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,8 +16,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
 
-namespace GraphQL
+namespace GraphQlPlayground
 {
     public class Startup
     {
@@ -29,12 +35,23 @@ namespace GraphQL
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<CourseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CourseDatabase")));
-            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
+            
+            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddScoped<StudentRepository>();
+            services.AddScoped<CourseSchema>();
+            services.AddGraphQL(o =>
+            {
+                o.ExposeExceptions = true;
+            }).AddGraphTypes(ServiceLifetime.Scoped);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseGraphQL<CourseSchema>();
+            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
