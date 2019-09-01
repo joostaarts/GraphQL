@@ -37,6 +37,8 @@ namespace GraphQlPlayground
             services.AddDbContext<CourseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CourseDatabase")));
             
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            
+            services.AddScoped<EnrollmentRepository>();
             services.AddScoped<StudentRepository>();
             services.AddScoped<CourseSchema>();
             services.AddGraphQL(o =>

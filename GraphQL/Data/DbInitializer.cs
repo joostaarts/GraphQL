@@ -12,18 +12,41 @@ namespace GraphQlPlayground.Data
         {
             context.Database.EnsureCreated();
 
+            context.Enrollments.RemoveRange(context.Enrollments);
+            context.Courses.RemoveRange(context.Courses);
+            context.Students.RemoveRange(context.Students);
+            context.SaveChanges();
+
             if (context.Students.Any())
             {
                 return;
             }
 
-            var p = new Student()
+            var student = new Student()
             {
-                FirstName = "first",
-                LastName = "last"
+                FirstName = "john",
+                LastName = "doe",
+                DateOfBirth = DateTime.Now.AddDays(10000)
             };
+            context.Students.Add(student);
 
-            context.Students.Add(p);
+            var course = new Course()
+            {
+                Credits = 10,
+                Title = "Just a course"
+            };
+            context.Courses.Add(course);
+
+            context.SaveChanges();
+
+            var enrollment = new Enrollment()
+            {
+                Student = student,
+                Course = course,
+                Grade = Grade.A
+            };
+            context.Enrollments.Add(enrollment);
+
 
             context.SaveChanges();
         }

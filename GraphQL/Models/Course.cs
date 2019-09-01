@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 namespace GraphQlPlayground.Models
 {
     public class Course
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CourseID { get; set; }
+    {        
+        public int Id { get; set; }
         public string Title { get; set; }
         public int Credits { get; set; }
 
