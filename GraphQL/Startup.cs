@@ -35,16 +35,18 @@ namespace GraphQlPlayground
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<CourseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CourseDatabase")));
-            
+
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
-            
+
             services.AddScoped<EnrollmentRepository>();
             services.AddScoped<StudentRepository>();
             services.AddScoped<CourseSchema>();
-            services.AddGraphQL(o =>
+            services
+            .AddGraphQL(o =>
             {
                 o.ExposeExceptions = true;
-            }).AddGraphTypes(ServiceLifetime.Scoped);
+            }).AddGraphTypes(ServiceLifetime.Scoped)
+            .AddDataLoader();
 
         }
 

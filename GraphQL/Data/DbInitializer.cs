@@ -22,32 +22,44 @@ namespace GraphQlPlayground.Data
                 return;
             }
 
-            var student = new Student()
-            {
-                FirstName = "john",
-                LastName = "doe",
-                DateOfBirth = DateTime.Now.AddDays(10000)
-            };
-            context.Students.Add(student);
+            var rand = new Random();
 
-            var course = new Course()
+            for (int i = 0; i < 10; i++)
             {
-                Credits = 10,
-                Title = "Just a course"
-            };
-            context.Courses.Add(course);
+                var student = new Student()
+                {
+                    FirstName = $"john{i}",
+                    LastName = $"doe{i}",
+                    DateOfBirth = DateTime.Now.AddDays(rand.Next(-15000, -5000))
+                };
+                context.Students.Add(student);
+            }
+
+
+            for (int i = 0; i < 10; i++)
+            {
+                var course = new Course()
+                {
+                    Credits = rand.Next(5, 11),
+                    Title = $"Just a course {i}"
+                };
+                context.Courses.Add(course);
+            }
+
 
             context.SaveChanges();
 
-            var enrollment = new Enrollment()
+
+            context.Students.ToList().ForEach(s =>
             {
-                Student = student,
-                Course = course,
-                Grade = Grade.A
-            };
-            context.Enrollments.Add(enrollment);
-
-
+                var enrollment = new Enrollment()
+                {
+                    Student = s,
+                    Course = context.Courses.First(),
+                    Grade = (Grade)rand.Next((int)Grade.A, (int)Grade.F + 1)
+                };
+                context.Enrollments.Add(enrollment);
+            });
             context.SaveChanges();
         }
     }

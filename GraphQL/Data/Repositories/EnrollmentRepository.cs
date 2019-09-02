@@ -1,4 +1,5 @@
 ﻿using GraphQlPlayground.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,10 @@ namespace GraphQlPlayground.Data.Repositories
             return _context.Enrollments.Where(e => e.StudentID == id);
         }
 
-        public IEnumerable<Enrollment> GetEnrollments()
+        public async Task<ILookup<int, Enrollment>> GetEnrollmentsForStudents(IEnumerable<int> studentIds)
         {
-            return _context.Enrollments;
+            var enrollments = await _context.Enrollments.Where(e => studentIds.Contains(e.StudentID)).ToListAsync();
+            return enrollments.ToLookup(e => e.StudentID);
         }
     }
 }

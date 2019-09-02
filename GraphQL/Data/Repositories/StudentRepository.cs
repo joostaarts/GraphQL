@@ -19,6 +19,11 @@ namespace GraphQlPlayground.Data.Repositories
         {
             return _context.Students;
         }
+
+        internal object GetStudent(int id)
+        {
+            return _context.Students.Single(student => student.Id == id);
+        }
     }
 
 }
