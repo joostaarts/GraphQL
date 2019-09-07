@@ -11,7 +11,8 @@ namespace GraphQlPlayground.GraphQL
     {
         public CourseSchema(IDependencyResolver resolver) : base(resolver)
         {
-            Query = resolver.Resolve<GraphQlPlayground.GraphQL.Types.Query>();
+            Query = resolver.Resolve<Types.Query>();
+            Mutation = resolver.Resolve<Types.Mutation>();
         }
 
     }
