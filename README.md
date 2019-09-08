@@ -45,3 +45,13 @@ mutation	{
   }
 }
 ```
+
+### Subscribe to student created event
+
+```
+subscription{
+  studentAdded {
+    id
+  }
+}
+```
