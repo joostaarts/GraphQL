@@ -1,6 +1,7 @@
 ﻿using GraphQL;
 using GraphQL.Types;
 using GraphQlPlayground.Data.Repositories;
+using GraphQlPlayground.GraphQL.Types;
 using GraphQlPlayground.GraphQL.Types.Input;
 using GraphQlPlayground.Models;
 using System;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQlPlayground.GraphQL.Types
+namespace GraphQlPlayground.GraphQL
 {
 
     public class Mutation : ObjectGraphType

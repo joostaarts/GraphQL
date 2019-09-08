@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
+using GraphQlPlayground.Services.Notification;
 
 namespace GraphQlPlayground
 {
@@ -38,6 +39,7 @@ namespace GraphQlPlayground
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
 
+            services.AddSingleton<StudentAddedNotificationService>();
             services.AddScoped<EnrollmentRepository>();
             services.AddScoped<StudentRepository>();
             services.AddScoped<CourseSchema>();
@@ -46,14 +48,17 @@ namespace GraphQlPlayground
             {
                 o.ExposeExceptions = true;
             }).AddGraphTypes(ServiceLifetime.Scoped)
-            .AddDataLoader();
+            .AddDataLoader()
+            .AddWebSockets();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseWebSockets();
             app.UseGraphQL<CourseSchema>();
+            app.UseGraphQLWebSockets<CourseSchema>("/graphql");
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
 
             if (env.IsDevelopment())

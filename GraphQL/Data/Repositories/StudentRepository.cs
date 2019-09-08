@@ -1,5 +1,6 @@
 ﻿using GraphQlPlayground.GraphQL.Types;
 using GraphQlPlayground.Models;
+using GraphQlPlayground.Services.Notification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,13 @@ namespace GraphQlPlayground.Data.Repositories
 {
     public class StudentRepository
     {
-        CourseContext _context;
+        private CourseContext _context;
+        private StudentAddedNotificationService _notificationService;
 
-        public StudentRepository(CourseContext context)
+        public StudentRepository(CourseContext context, StudentAddedNotificationService notificationService)
         {
             _context = context;
+            _notificationService = notificationService;
         }
 
         public IEnumerable<Student> GetAll()
@@ -30,6 +33,7 @@ namespace GraphQlPlayground.Data.Repositories
         {
             _context.Students.Add(student);
             await _context.SaveChangesAsync();
+            _notificationService.AddNewStudentMessage(student);
             return student;
         }
     }
